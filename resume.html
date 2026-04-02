@@ -2,23 +2,24 @@
 <html>
     <head>
         <title> Hutchins/Resume </title>
-        <style>body {background-color: #6a7f94;}</style>
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <div style = "background-color: whitesmoke; padding: 20px; text-align: center;">
-            <a href="index.html">Home</a>
-            <a href="resume.html">Resume</a>
-            <a href="photogallery.html">Photo Gallery</a>
+    <div class = maindiv>
+        <div class = navbar>
+            <a class = "navlink" href="index.html">Home</a>
+            <a class = "navlinkpage" href="resume.html">Resume</a>
+            <a class = "navlink" href="photogallery.html">Photo Gallery</a>
         </div>
         <h1 style = "text-align: center; font-size: 50px;">Resume</h1>
-        <img src="headshot.jpeg" style="display:block; margin:0 auto; width:300px;" alt="Image of hutchins."> 
-        <div style = "text-align: center; font-size: 20px; background-color: white;">
+        <img id = "headshot" src="headshot.jpeg" alt="Image of hutchins."> 
+        <div class = resumediv>
             <h2>Contact Information</h2>
             <p>Email: Hutchinsreilly@gmail.com</p>
             <p>Phone: 737-977-5152</p>
             <p>Address: 706 Meriden Ln</p>
         </div>
-        <div style = "text-align: center; font-size: 20px; background-color: white;">
+        <div class = resumediv>
             <h2>Work / Volunteer Experience</h2>
             <ul>
                 <li>Tennis Coaching</li>
@@ -31,7 +32,7 @@
                     </ul>
             </ul>
         </div>
-        <div style = "text-align: center; font-size: 20px; background-color: white;">
+        <div class = resumediv>
             <h2>Education</h2>
             <p>School: Austin High School</p>
             <p>GPA: 3.7393</p>
@@ -43,7 +44,7 @@
                 <li>AP World History</li>
             </ol>
         </div>
-        <div style = "text-align: center; font-size: 20px; background-color :white;">
+        <div class = resumediv>
             <h2>Extracurricular Activities</h2>
             <ol>
                 <li>Tennis</li>
@@ -51,32 +52,33 @@
                 <li>Baseball</li>
             </ol>
         </div>
-        <div style = "text-align: center; font-size: 20px; background-color: white;">
+        <div class = resumediv>
             <h2>Awards/Achievements</h2>
             <ul>
                 <li>L5 tennis tournoment winner</li>
                 <li>Conallly Highschool Tennis Tournament second place boys doubles</li>
             </ul>
         </div>
-        <div style = "text-align: center; font-size: 20px; background-color: white;">
+        <div class = resumediv>
             <h2>References</h2>
-            <table>
-                <tr>
+            <table id = "tabel">
+                <tr id = "intabel">
                     <td>Micheal Reilly</td>
                     <td>Dad</td>
                     <td>512-577-6441</td>
                 </tr>
-                <tr>
+                <tr id = "intabel">
                     <td>Shae Reilly</td>
                     <td>Mom</td>
                     <td>512-577-6440</td>
                 </tr>
-                <tr>
+                <tr id = "intabel">
                     <td>Mr. Yin</td>
                     <td>Teacher</td>
                     <td>david.yin@austinisd.org</td>
                 </tr>
             </table>
         </div>
+    </div>
     </body>
 </html>
