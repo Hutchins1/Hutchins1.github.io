@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <title> Hutchins/Mad Lib </title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class = navbar>
+            <a class = "navlink" href="index.html">Home</a>
+            <a class = "navlink" href="resume.html">Resume</a>
+            <a class = "navlink" href="photogallery.html">Photo Gallery</a>
+            <a class = "navlink" href="geography.html">Geography Quiz</a>
+            <a class = "navlinkpage" href="madlib.html">Mad Lib</a>
+        </div>
+        <div id="welcomeScreen" style="text-align: center;">
+            <h1>Mad Lib</h1>
+            <p>
+            Create your own story by filling in the blanks!
+            </p>
+            <button onclick="startMadLib()">Start Mad Lib</button>
+        </div>
+
+        <!-- MAD LIB CONTENT (hidden at start) -->
+        <div id="madLibContainer" style="text-align: center; display: none;">
+
+            <h2 id="question"></h2>
+
+            <input id="answerInput" type="text" placeholder="Enter your answer">
+
+            <br><br>
+
+            <button id="answerButton" onclick="checkAnswer()">Submit Answer</button>
+
+            <p id="feedback"></p>
+
+        </div>
+
+        <script>
+            let questions = ["adjective", "noun", "verb", "noun", "adjective", "noun", "verb"];
+            let answers = [];
+            let currentQuestion = 0;
+
+            function loadQuestion(){
+                document.getElementById("question").innerText = "Enter a " + questions[currentQuestion] + ":";
+                document.getElementById("answerInput").value = "";
+            }
+
+            function checkAnswer(){
+                if(document.getElementById("answerButton").innerText === "Restart"){
+                    startMadLib();
+                    return;
+                }
+                let value = document.getElementById("answerInput").value.trim();
+                if(!value){
+                    document.getElementById("feedback").innerText = "Please enter something";
+                    return;
+                }
+                answers.push(value);
+                document.getElementById("answerInput").value = "enter answer here";
+                currentQuestion++;
+                if(currentQuestion < questions.length){
+                    loadQuestion();
+                } else {
+                    let story = "Yesterday, I saw a " + answers[0] + " " + answers[1] + " trying to " + answers[2] + " a giant " + answers[3] + ". It was so " + answers[4] + " that I accidentally dropped my " + answers[5] + " and started to " + answers[6] + "!";
+                    document.getElementById("question").innerText = "Your Mad Lib Story:";
+                    document.getElementById("feedback").innerText = story;
+                    document.getElementById("answerButton").innerText = "Restart";
+                }
+            }
+
+            function startMadLib(){
+                answers = [];
+                currentQuestion = 0;
+                document.getElementById("welcomeScreen").style.display = "none";
+                document.getElementById("madLibContainer").style.display = "block";
+                document.getElementById("feedback").innerText = "";
+                document.getElementById("answerButton").innerText = "Submit Answer";
+                loadQuestion();
+            }
+        </script>
+    </body>
+</html>
