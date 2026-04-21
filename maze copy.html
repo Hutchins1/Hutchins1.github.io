@@ -1,0 +1,343 @@
+Here's the full code:
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Hutchins </title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+    <div class = maindiv>
+        <div class = navbar>
+            <a class = "navlink" href="index.html">Home</a>
+            <a class = "navlink" href="resume.html">Resume</a>
+            <a class = "navlink" href="photogallery.html">Photo Gallery</a>
+            <a class = "navlink" href="geography.html">Geography Quiz</a>
+            <a class = "navlink" href="madlib.html">Mad Lib</a>
+            <a class = "navlink" href="snake.html">Snake</a>
+            <a class = "navlinkpage" href="maze.html">Maze</a>
+        </div>
+<div>
+      <h2>Maze Game</h2>
+      <p>
+          Navigate the maze, collect the fruit, and avoid the walls and your own body!
+      </p>
+
+      <canvas id="gameCanvas" width="400" height="420" style="display: block; background-color: black;"></canvas>
+      <button onclick="startGame()">Start</button>
+</div>
+<script>
+    map1 = [[1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+       [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+       [1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,1],
+       [1,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,1],
+       [1,0,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,0,1],
+       [1,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,1],
+       [1,0,1,0,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1],
+       [1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1],
+       [1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,0,1,1,0,1],
+       [1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1],
+       [1,0,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,0,1],
+       [1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1],
+       [1,1,1,1,1,0,1,0,1,0,1,1,1,1,0,1,1,1,0,1],
+       [1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,1],
+       [1,1,1,1,0,1,1,1,1,1,1,1,0,1,0,1,0,1,0,1],
+       [1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,0,1,0,1],
+       [1,0,1,1,1,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1],
+       [1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1],
+       [1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
+       [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,1],
+       [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1]
+        ];
+
+    map2 = [[1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+       [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+       [1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,1],
+       [1,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,1],
+       [1,0,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,0,1],
+       [1,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,1],
+       [1,0,1,0,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1],
+       [1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1],
+       [1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,0,1,1,0,1],
+       [1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1],
+       [1,0,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,0,1],
+       [1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1],
+       [1,1,1,1,1,0,1,0,1,0,1,1,1,1,0,1,1,1,0,1],
+       [1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,1],
+       [1,1,1,1,0,1,1,1,1,1,1,1,0,1,0,1,0,1,0,1],
+       [1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,0,1,0,1],
+       [1,0,1,1,1,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1],
+       [1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1],
+       [1,0,1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1],
+       [1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,2,1],
+       [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1]
+        ];
+    
+    map3 = [[1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+       [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+       [1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,1],
+       [1,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,1],
+       [1,0,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,0,1],
+       [1,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,1],
+       [1,0,1,0,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1],
+       [1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1],
+       [1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,0,1,1,0,1],
+       [1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1],
+       [1,0,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,0,1],
+       [1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1],
+       [1,1,1,1,1,0,1,0,1,0,1,1,1,1,0,1,1,1,0,1],
+       [1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,1],
+       [1,1,1,1,0,1,1,1,1,1,1,1,0,1,0,1,0,1,0,1],
+       [1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,0,1,0,1],
+       [1,0,1,1,1,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1],
+       [1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1],
+       [1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
+       [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,1],
+       [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1]
+        ];
+
+    map4 = [[1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+       [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+       [1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,1],
+       [1,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,1],
+       [1,0,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,0,1],
+       [1,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,1],
+       [1,0,1,0,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1],
+       [1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1],
+       [1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,0,1,1,0,1],
+       [1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1],
+       [1,0,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,0,1],
+       [1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1],
+       [1,1,1,1,1,0,1,0,1,0,1,1,1,1,0,1,1,1,0,1],
+       [1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1],
+       [1,1,1,1,0,1,1,1,1,1,1,1,0,1,0,1,0,1,0,1],
+       [1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,0,1,0,1],
+       [1,0,1,1,1,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1],
+       [1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1],
+       [1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
+       [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,1],
+       [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1]
+        ];
+    maplist = [map1, map2, map3, map4];
+
+    // ===== GLOBALS =====
+    let canvas, ctx;
+    let head;
+    let fruit;
+    let door;
+    let key;
+    let walls;
+    let openPositions;
+    let controlsRegistered = false;
+    let gameOver = false;
+    let hasKey = false;
+
+    // ===== CLASSES =====
+    class Head {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.size = 20;
+            this.color = "blue";
+            this.speed = 20;
+            this.dx = this.speed;
+            this.dy = 0;
+        }
+        draw(ctx) {
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.size, this.size);
+        }
+    }
+
+    class Fruit {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.size = 20;
+            this.color = "red";
+        }
+        draw(ctx) {
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.size, this.size);
+        }
+    }
+
+    class Key {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.size = 20;
+            this.color = "gold";
+            this.collected = false;
+        }
+        draw(ctx) {
+            if (this.collected) return;
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.size, this.size);
+        }
+    }
+
+    class Door {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.size = 20;
+            this.color = "#8B4513";
+            this.open = false;
+        }
+        draw(ctx) {
+            if (this.open) return;
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.size, this.size);
+        }
+    }
+
+    function startGame() {
+        canvas = document.getElementById("gameCanvas");
+        ctx = canvas.getContext("2d");
+        let selectedMap = maplist[Math.floor(Math.random() * maplist.length)];
+
+        openPositions = [];
+        for (let i = 0; i < selectedMap.length; i++) {
+            for (let j = 0; j < selectedMap[i].length; j++) {
+                if (selectedMap[i][j] === 0) {
+                    openPositions.push({ x: j * 20, y: i * 20 });
+                }
+            }
+        }
+
+        function pickRandom(excluded) {
+            let valid = openPositions.filter(pos =>
+                !excluded.some(e => e.x === pos.x && e.y === pos.y)
+            );
+            return valid[Math.floor(Math.random() * valid.length)];
+        }
+
+        const startPos = { x: 20, y: 0 };
+
+        let fruitPos = pickRandom([startPos]);
+        let keyPos   = pickRandom([startPos, fruitPos]);
+        let doorPos  = pickRandom([startPos, fruitPos, keyPos]);
+
+        walls = [];
+        for (let i = 0; i < selectedMap.length; i++) {
+            for (let j = 0; j < selectedMap[i].length; j++) {
+                if (selectedMap[i][j] === 1) {
+                    walls.push({ x: j * 20, y: i * 20, size: 20 });
+                }
+            }
+        }
+
+        gameOver = false;
+        hasKey = false;
+        head  = new Head(20, 0);
+        fruit = new Fruit(18*20, 20*20);
+        key   = new Key(20, 10*20);
+        door  = new Door(18*20, 18*20);
+
+        if (!controlsRegistered) {
+            document.addEventListener("keydown", handleKeys);
+            controlsRegistered = true;
+        }
+        draw();
+    }
+
+    function moveOneStep(dx, dy) {
+        let newX = head.x + dx;
+        let newY = head.y + dy;
+
+        if (newX < 0 || newY < 0 || newX + head.size > canvas.width || newY + head.size > canvas.height) {
+            return;
+        }
+
+        for (let wall of walls) {
+            if (newX < wall.x + wall.size && newX + head.size > wall.x &&
+                newY < wall.y + wall.size && newY + head.size > wall.y) {
+                return;
+            }
+        }
+
+        if (door && !door.open) {
+            if (newX < door.x + door.size && newX + head.size > door.x &&
+                newY < door.y + door.size && newY + head.size > door.y) {
+                return;
+            }
+        }
+
+        head.x = newX;
+        head.y = newY;
+        checkFruitCollision();
+        checkKeyCollision();
+        draw();
+    }
+
+    function checkFruitCollision() {
+        const hitX = head.x < fruit.x + fruit.size && head.x + head.size > fruit.x;
+        const hitY = head.y < fruit.y + fruit.size && head.y + head.size > fruit.y;
+        if (hitX && hitY) {
+            respawnFruit();
+        }
+    }
+
+    function checkKeyCollision() {
+        if (key.collected) return;
+        const hitX = head.x < key.x + key.size && head.x + head.size > key.x;
+        const hitY = head.y < key.y + key.size && head.y + head.size > key.y;
+        if (hitX && hitY) {
+            key.collected = true;
+            hasKey = true;
+            door.open = true;
+        }
+    }
+
+    function respawnFruit() {
+        let excluded = [{ x: head.x, y: head.y }];
+        if (!key.collected) excluded.push({ x: key.x, y: key.y });
+        if (!door.open)     excluded.push({ x: door.x, y: door.y });
+
+        let validPositions = openPositions.filter(pos =>
+            !excluded.some(e => e.x === pos.x && e.y === pos.y)
+        );
+        let fruitPos = validPositions[Math.floor(Math.random() * validPositions.length)];
+        fruit.x = fruitPos.x;
+        fruit.y = fruitPos.y;
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (fruit) fruit.draw(ctx);
+
+        for (let i = 0; i < walls.length; i++) {
+            ctx.fillStyle = "gray";
+            ctx.fillRect(walls[i].x, walls[i].y, walls[i].size, walls[i].size);
+        }
+
+        if (door) door.draw(ctx);
+        if (key) key.draw(ctx);
+
+        head.draw(ctx);
+
+        if (gameOver) {
+            ctx.fillStyle = "white";
+            ctx.font = "40px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
+        }
+    }
+
+    function handleKeys(e) {
+        if (gameOver) return;
+        if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+            e.preventDefault();
+        }
+        if (e.key === "ArrowUp")    moveOneStep(0, -20);
+        if (e.key === "ArrowDown")  moveOneStep(0,  20);
+        if (e.key === "ArrowLeft")  moveOneStep(-20, 0);
+        if (e.key === "ArrowRight") moveOneStep( 20, 0);
+    }
+
+</script>
+</body>
+</html>

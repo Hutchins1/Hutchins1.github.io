@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Hutchins </title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+    <div class = maindiv>
+        <div class = navbar>
+            <a class = "navlinkpage" href="index.html">Home</a>
+            <a class = "navlink" href="resume.html">Resume</a>
+            <a class = "navlink" href="photogallery.html">Photo Gallery</a>
+            <a class = "navlink" href="geography.html">Geography Quiz</a>
+            <a class = "navlink" href="madlib.html">Mad Lib</a>
+        </div>
+    </div>
+
+    <canvas id= "gameCanvas" width="500" height="500"></canvas>
+
+    <script>
+        let canvas, ctx;
+
+        const PLAYER_SIZE = 30
+        const BLOCK_SIZE = 40;
+        const SPEED = 5;
+
+        class Player{
+            //constructor
+            constructor(x, y){
+                this.x = x;
+                this.y = y;
+                this.size = Player_SIZE;
+
+            }
+            draw(){
+                ctx.fillStyle = "blue";
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+            }
+        }
+
+        //setup
+
+        function startGame()    
+        {
+            canvas = document.getElementById("gameCanvas");
+            ctx = canvas.getContext("2d");
+
+            player = new Player(235, 235);
+
+            //start game loop
+            document.addEventListener("keydown", handleKeys);
+        }
+    </script>
+    </body>
+</html>
